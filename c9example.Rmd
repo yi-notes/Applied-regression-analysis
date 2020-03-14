@@ -1,0 +1,100 @@
+---
+title: "Example"
+author: "Yi"
+date: "January 28, 2016"
+output: html_document
+---
+
+
+```{r, echo = FALSE, warning=FALSE, message=FALSE}
+library(Hmisc); library(reshape2); library(ggplot2)
+library(rms); library(nlme)
+library(knitr); library(xtable); library(textreg)
+library(rpart); library(grid); 
+library(pander); library(stargazer)
+opts_chunk$set(echo = TRUE, warning=FALSE, message=FALSE, 
+               results = 'asis', comment = c("%"))
+```
+
+## Data Description
+
+
+```{r}
+data <- data.frame(
+  WGT = c(64,71,53,67,55,58,77,57,56,51,76,68),
+  HGT = c(57,59,49,62,51,50,55,48,42,42,61,57),
+  AGE = c(8 ,10, 6,11, 8, 7,10, 9,10, 6,12, 9))
+pander(data, caption = "8.1, Page 137")
+#stargazer(data, type = "latex")
+```
+
+## F test 
+
+```{r}
+la <- lm(WGT ~ AGE, data = data)
+#pander(summary(la))
+pander(anova(la)) 
+
+lh <- lm(WGT ~ HGT, data = data)
+#pander(summary(lh))
+pander(anova(lh))
+
+l1.1 <- lm(WGT ~ HGT + AGE, data = data)
+#pander(summary(l1))
+pander(anova(l1.1))
+
+l1.2 <- lm(WGT ~ AGE + HGT, data = data)
+#pander(summary(l1)) 
+pander(anova(l1.2))  ##SS/MS changed with the position of variable
+
+l2 <- lm(WGT ~ .+ poly(AGE,2), data = data)
+pander(anova(l2), caption = "Table 9.1")
+#pander(summary(l2))
+```
+
+## Variables-added-in-order tests
+
+```{r}
+data$hgt.c <- scale(data["HGT"], center = TRUE, scale = FALSE)
+data$age.c <- scale(data["AGE"], center = TRUE, scale = FALSE)
+
+ll1 <- lm(WGT ~ hgt.c, data = data)  # Add variable one by one
+ll2 <- lm(WGT ~ hgt.c + age.c, data = data)
+ll3 <- lm(WGT ~ hgt.c + age.c + I(age.c^2), data = data)
+
+pander(anova(ll1), caption = "HGT centered")
+pander(anova(ll2), caption = "Addition of AGE centered")
+pander(anova(ll3), caption = "Addition of Poly(AGE)")
+#stargazer(ll1, ll2, ll3, type = "latex")
+```
+
+## Variables-added-last tests
+
+- Residual substraction
+
+```{r} 
+lll0 <- lm(WGT ~ age.c + I(age.c^2) + hgt.c, data = data)  
+lll1 <- lm(WGT ~ age.c + I(age.c^2), data = data)          
+lll2 <- lm(WGT ~ hgt.c + I(age.c^2), data = data)          
+lll3 <- lm(WGT ~ hgt.c + age.c, data = data)             
+
+pander(anova(lll0))  # full model
+pander(anova(lll1))  # delete hgt.c
+pander(anova(lll2))  # delete age.c
+pander(anova(lll3))  # delete age.c^2
+```
+
+- Last added
+
+```{r} 
+llll1 <- lm(WGT ~ age.c + I(age.c^2) + hgt.c, data = data)          
+llll2 <- lm(WGT ~ hgt.c + I(age.c^2) + age.c, data = data)          
+llll3 <- lm(WGT ~ hgt.c + age.c + I(age.c^2), data = data)             
+
+pander(anova(llll1))  # hgt.c last
+pander(anova(llll2))  # age.c last
+pander(anova(llll3))  # age.c^2 last
+pander(summary(lll0)) # Compare P value
+#stargazer(llll1, llll2, llll3, type = "latex")
+stargazer(llll1, llll2, llll3, type = "html")
+```

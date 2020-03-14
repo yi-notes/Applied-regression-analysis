@@ -1,0 +1,128 @@
+---
+title: "11 Confounding and interaction in regression"
+subtitle: Applied regression analysis and other multivariate methods
+author: "[Yi Zhou](https://github.com/zy0426/Book-Applied-regression-analysis)"
+date: "February 24, 2016"
+fontsize: 10pt
+output: 
+  beamer_presentation:
+    fig_height: 4
+    fig_width: 4
+---
+
+## Preview
+
+Two goals in a regression analysis
+
+- To predict the dependent variable (Y), to find a model
+- To quantify the relationship between X and Y, to produce statistical inference about coefficients
+
+The second goal is of paticular interest in clarufying a causal process
+
+## Overview
+
+- Interaction
+
+    - The relationship of interest is different at different levels of the extraneous variables
+    - e.g., dose the `PAL`-`SBP` relationship vary with `AGE`
+    - Require a statistical test
+    
+- Confounding
+
+    - Meaningfully different interpretations of the relationship of interest result when the extraneous variable is ingnored or included
+    - e.g., dose the `PAL`-`SBP` relationship vary if we ignore `AGE`
+    - Comparison between a crude estimate of an association and an adjusted one
+    - Do not require a statistical test
+    
+
+## Interaction
+
+Case 1
+
+```{r, echo=FALSE}
+
+data1 <- data.frame(
+  T = c(1,2, 1,2),
+  C = c(1,1, 2,2),
+  Y = c(1,3, 2,4)
+)
+l1 <- lm(Y~T, data1[1:2, ])
+l2 <- lm(Y~T, data1[3:4, ])
+
+plot(data1$T, data1$Y)
+abline(l1)
+abline(l2, col = "red")
+```
+
+##
+
+
+```{r, echo=FALSE,results='asis'}
+stargazer::stargazer(l1,l2,  header = FALSE, column.sep.width = "2pt",
+                     no.space = TRUE, font.size ="small", single.row=TRUE,
+                     column.labels = c("black", "red"),
+                     dep.var.labels.include = FALSE,
+                     dep.var.caption = "Y",
+                     digits = 0)
+```
+
+
+
+## 
+
+Case 2
+
+```{r, echo=FALSE}
+data2 <- data.frame(
+  T = c(1,2, 1,2),
+  C = c(1,1, 2,2),
+  Y = c(1,3, 4,2)
+)
+l1 <- lm(Y~T, data2[1:2, ])
+l2 <- lm(Y~T, data2[3:4, ])
+l3 <- lm(Y~T*C, data2)
+
+plot(data2$T, data2$Y)
+abline(l1)
+abline(l2, col = "red")
+```
+
+##
+
+
+```{r, echo=FALSE,results='asis'}
+stargazer::stargazer(l1,l2,l3,  header = FALSE, column.sep.width = "2pt",
+                     no.space = TRUE, font.size ="small", single.row=TRUE,
+                     column.labels = c("black", "red", "total"),
+                     dep.var.labels.include = FALSE,
+                     dep.var.caption = "Y",
+                     digits = 0)
+```
+
+## Interaction modeling in general
+
+Three approaches to spicify which terms to include
+
+- interactions resonable a prior based on literature and expertise
+- a full set of product terms
+- interaction with the primary factors
+
+## Effect modification 
+
+Effect-measurement modification
+
+- Variation in the magnitude of a measure of exposure effect across levels of another variable
+- A finding to be reported
+- `Statistics` and `epidemiology`
+- heterogeniety of effect, nonuniformity of effect, effect variation
+- risk-difference modification vs. risk-ratio modification
+- the presence/abscence of (statistical) interaction is decided by the (epidemiological) scale (difference/ratio) 
+
+## Confounding
+
+We have to determine subjectively
+
+- A bias to be avoided
+- Confounding should take precedence over precision
+- Interactino should take precedence over confounding
+

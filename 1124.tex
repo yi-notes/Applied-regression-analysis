@@ -1,0 +1,213 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Short Sectioned Assignment
+% LaTeX Template
+% Version 1.0 (5/5/12)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% Frits Wenneker (http://www.howtotex.com)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[paper=a4, fontsize=11pt]{scrartcl} % A4 paper and 11pt font size
+
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+\usepackage{fourier} % Use the Adobe Utopia font for the document - comment this line to return to the LaTeX default
+\usepackage[english]{babel} % English language/hyphenation
+\usepackage{amsmath,amsfonts,amsthm} % Math packages
+
+%\usepackage{lipsum} % Used for inserting dummy 'Lorem ipsum' text into the template
+
+\usepackage{sectsty} % Allows customizing section commands
+\allsectionsfont{\centering \normalfont\scshape} % Make all sections centered, the default font and small caps
+
+\usepackage{fancyhdr} % Custom headers and footers
+\pagestyle{fancyplain} % Makes all pages in the document conform to the custom headers and footers
+\fancyhead{} % No page header - if you want one, create it in the same way as the footers below
+\fancyfoot[L]{} % Empty left footer
+\fancyfoot[C]{} % Empty center footer
+\fancyfoot[R]{\thepage} % Page numbering for right footer
+\renewcommand{\headrulewidth}{0pt} % Remove header underlines
+\renewcommand{\footrulewidth}{0pt} % Remove footer underlines
+\setlength{\headheight}{13.6pt} % Customize the height of the header
+
+\numberwithin{equation}{section} % Number equations within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{figure}{section} % Number figures within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{table}{section} % Number tables within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs - comment this line for an assignment with lots of text
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} % Create horizontal rule command with 1 argument of height
+
+\title{	
+\normalfont \normalsize 
+\textsc{Chapter 5-6 Review} \\ [25pt] % Your university, school and/or department name(s)
+\horrule{0.5pt} \\[0.4cm] % Thin top horizontal rule
+\huge Straight-line Regression Analysis \\ % The assignment title
+\horrule{2pt} \\[0.5cm] % Thick bottom horizontal rule
+}
+
+\author{Yi Zhou} % Your name
+
+\date{\normalsize\today} % Today's date or a custom date
+
+\begin{document}
+
+\maketitle % Print the title
+
+%----------------------------------------------------------------------------------------
+%	PROBLEM 1
+%----------------------------------------------------------------------------------------
+
+\section{Straight-line Model}
+
+\begin{enumerate}
+\item Association vs Causality
+\item Statistical model vs Deterministic model
+\item Assumptions
+
+ \begin{itemize}
+	\item Existence
+	\item Independence
+	\item Linearity
+	\item Homoscedasticity ($\sigma_{Y|X_i}^2=\sigma_{Y|X_j}^2$)
+	\item Normal Distribution
+\end{itemize}
+
+\end{enumerate}
+
+
+%------------------------------------------------
+
+\subsection{Mathematical Model}
+
+Firstly, in the mathematical context, given that $x$ and $y$ are mathematical vectors, we have equation
+\begin{align}
+y = \beta_0 + \beta_1x
+\end{align}
+where $\beta_0$ is called \textit{y-intercept}, $\beta_1$ is called \textit{slope}.
+
+%------------------------------------------------
+
+\subsection{Statistical Model}
+
+In the statistical context, considering $X$ the only one independent variable (predictor) and $Y$ the only one dependent variable (response), 
+\begin{itemize}
+	\item $Y = \beta_0 + \beta_1X + E$
+	\item $\mu_{Y|X} = \beta_0 + \beta_1X$
+	\item $\hat{Y} = \hat{\beta}_0 + \hat{\beta_1}X$
+	\item $E = Y - (\beta_0 + \beta_1X)$
+	\item $E = Y - \mu_{Y|X}$
+	\item Residual: $\hat{E} = Y - \hat{Y} = Y - (\hat{\beta}_0 + \hat{\beta_1}X)$
+	\item $SSE = \sum_{i=1}^{n}(Y_i-\hat{Y_i})^2$
+\end{itemize}
+
+Parameters to be estimated: $\beta_0, \beta_1$, specific values
+\\Methods: Least-square method
+\\Variables of interest: 
+\begin{itemize}
+	\item $X$: fixed and observable
+	\item $Y$: random and observable 
+	\item $E$: random but unobservable, $E \sim N(0, \sigma^2)$  
+\end{itemize}
+Then, another parameter of interest: $\sigma^2$.
+
+%----------------------------------------------------------------------------------------
+%	PROBLEM 2
+%----------------------------------------------------------------------------------------
+
+\subsection{Statistical Inferences}
+\begin{enumerate}
+\item Estimation
+\item Statistical hypotheses
+\end{enumerate}
+
+%------------------------------------------------
+\subsubsection{$\sigma^2$}
+The estimate of $\sigma^2$: $S^2_{Y|X} =$
+\\The definition of $SSE$
+\\Another convenient computational formula concerning $S^2_X, S^2_Y, \hat{\beta}^2$ is $S^2_{Y|X} = $
+\\where $S^2_X = $~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ $S^2_Y = $
+
+%------------------------------------------------
+\subsubsection{$\beta_0, \beta_1$}
+Least-square method: $\hat{\beta_0} = \dfrac{\partial SSE}{\partial \beta_0}$, $\hat{\beta_1} = \dfrac{\partial SSE}{\partial \beta_1}$
+\\Centralized transformation: $\hat{Y} = \hat{\beta}_0 + \hat{\beta_1}(X - \bar{X})$\\
+\begin{itemize}
+	\item $\beta_1$
+		\begin{itemize}
+		\item $\mu_{\hat{\beta_1}}, \sigma^2_{\hat{\beta_1}},$
+		\item $H_0: \beta_1 = \beta^{(0)}_1$
+		\item $T_1 \sim t_{n-2}$
+		\item CI
+		\item Interpretation of the test
+		\end{itemize}
+	\item $\beta_0$
+		\begin{itemize}
+		\item $\mu_{\hat{\beta_0}}, \sigma^2_{\hat{\beta_0}},$
+		\item $H_0: \beta_0 = \beta^{(0)}_0$
+		\item $T_0 \sim t_{n-2}$
+		\item CI
+		\item Interpretation of the test
+		\end{itemize}
+\end{itemize}
+
+\subsubsection{$\mu_{Y|X} = \beta_0 + \beta_1X$}
+Given $X_0$, 
+\\$H_0: \mu_{Y|X_0} = \mu^{(0)}_{Y|X_0}$
+\\$T \sim t_{(n-2)}$
+\\CI
+\\Confidence band, prediction band
+
+
+%------------------------------------------------
+
+\section{Correlation Coefficient}
+\begin{itemize}\\
+   \item Population correlation coefficient: $\rho$
+   \item Sample correlation coefficient: $r = \dfrac{S_X}{S_Y}\hat{\beta_1}$	
+   \item $r^2 = \dfrac{SSY-SSE}{SSY}$
+   \end{itemize}
+\\Mathematical properties
+\\Interpretation and measurement of $r$
+
+\subsection{Test Hypotheses}
+\begin{enumerate}
+\item $H_0: \rho = 0 (\beta_1 = 0)$ 
+	\begin{itemize}
+	\item $T \sim t_{n-2}$
+	\end{itemize}
+\item $H_0: \rho = \rho_0, \rho_0 \neq 0$\\
+	\begin{itemize}
+	\item Fisher's Z transformation
+	\item $Z \sim N(0,1)$
+	\item CI
+	\end{itemize}
+\item $H_0: \rho_1 = \rho_2$\\
+	\begin{itemize}
+	\item Fisher's Z transformation, $Z_1, Z_2$
+	\item $Z \sim N(0,1)$
+	\item CI
+	\end{itemize}
+\item $H_0: \rho_{12} = \rho_{13}$, not independent
+	\begin{itemize}
+	\item $Z \sim N(0, 1)$
+	\end{itemize}
+\end{enumerate}
+
+%----------------------------------------------------------------------------------------
+
+\end{document}
